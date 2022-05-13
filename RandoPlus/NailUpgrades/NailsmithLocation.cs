@@ -33,9 +33,11 @@ namespace RandoPlus.NailUpgrades
 
         public void UpdateText(ref string value)
         {
+            
+
             if (Placement.Name[Placement.Name.Length - 1].ToString() == (RandoPlus.GS.UpgradesTaken + 1).ToString())
             {
-                value = $"Give your Geo for {Placement.Items[0].GetPreviewName()}";
+                value = $"Give your Geo and {RandoPlus.GS.UpgradesTaken} Pale Ores for {Placement.Items[0].GetPreviewName()} ";
             }
 
         }

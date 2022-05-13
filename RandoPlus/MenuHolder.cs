@@ -42,6 +42,9 @@ namespace RandoPlus
             RandoPlus = new MenuPage("RandoPlus", landingPage);
             rpMEF = new(RandoPlus, global::RandoPlus.RandoPlus.GS);
             rpVIP = new(RandoPlus, new(0, 300), 50f, false, rpMEF.Elements);
+            Modding.Logger.Log(rpVIP.Items[rpVIP.Items.Count - 1].ToString());
+            rpVIP.Items[rpVIP.Items.Count - 1].Hide();
+            //rpVIP.Items.Find(x=> x.ToString().ToLower() == "UpgradesTaken".ToLower()).Hide();
         }
     }
 }

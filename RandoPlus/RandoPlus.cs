@@ -9,6 +9,7 @@ namespace RandoPlus
     public class RandoPlus : Mod, IGlobalSettings<GlobalSettings>
     {
         internal static RandoPlus instance;
+        public bool toggles = ModHooks.GetMod("SkillsToggles") is Mod;
 
         public static GlobalSettings GS = new();
         public void OnLoadGlobal(GlobalSettings gs) => GS = gs;

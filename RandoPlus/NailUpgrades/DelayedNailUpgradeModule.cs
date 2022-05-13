@@ -3,7 +3,7 @@ using ItemChanger;
 using ItemChanger.Extensions;
 using ItemChanger.FsmStateActions;
 using ItemChanger.Modules;
-
+using SkillsToggles;
 namespace RandoPlus.NailUpgrades
 {
     public class DelayedNailUpgradeModule : Module
@@ -15,14 +15,20 @@ namespace RandoPlus.NailUpgrades
 
         public override void Initialize()
         {
-            Events.AddFsmEdit(new("Inv", "UI Inventory"), AllowNailUpgradeClaim);
+            if (!RandoPlus.instance.toggles)
+            {
+                Events.AddFsmEdit(new("Inv", "UI Inventory"), AllowNailUpgradeClaim);
+            }
             for (int i = 1; i <= 5; i++) Events.AddLanguageEdit(new("UI", "INV_DESC_NAIL" + i), ShowNailUpgrades);
             Events.AddFsmEdit(new("Nailsmith", "Conversation Control"), ConvoPatcher);
             RandoPlus.GS.UpgradesTaken = 0;
         }
         public override void Unload()
         {
-            Events.RemoveFsmEdit(new("Inv", "UI Inventory"), AllowNailUpgradeClaim);
+            if (!RandoPlus.instance.toggles)
+            {
+                Events.RemoveFsmEdit(new("Inv", "UI Inventory"), AllowNailUpgradeClaim);
+            }
             for (int i = 1; i <= 5; i++) Events.RemoveLanguageEdit(new("UI", "INV_DESC_NAIL" + i), ShowNailUpgrades);
             Events.RemoveFsmEdit(new("Nailsmith", "Conversation Control"), ConvoPatcher);
         }
@@ -36,7 +42,7 @@ namespace RandoPlus.NailUpgrades
             {
                 new Lambda(()=> fsm.FsmVariables.GetFsmInt("Ore").Value=PlayerData.instance.ore),
                 new Lambda(()=> fsm.FsmVariables.GetFsmInt("Upgrades Completed").Value = RandoPlus.GS.UpgradesTaken),
-                new Lambda(()=> fsm.SendEvent("OFFER 1"))
+                new Lambda(()=> fsm.SendEvent($"OFFER {RandoPlus.GS.UpgradesTaken +1}"))
             };
             #endregion
 
